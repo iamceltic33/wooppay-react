@@ -1,0 +1,15 @@
+header {    
+    background-color: rgb(70, 70, 255);    
+    color: white;
+    & .container {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.logo {
+    text-transform: uppercase;
+    font-size: 20px;
+}
