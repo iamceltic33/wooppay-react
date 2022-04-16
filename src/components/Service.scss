@@ -21,10 +21,10 @@
     margin: 0 auto 15px;    
 }
 .service-input {    
-    width: 100%;
-    margin: 5px 0;
+    width: 100%;    
     font-size: 20px;
-    padding: 5px;    
+    padding: 10px;    
+    margin-bottom: 20px;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -32,6 +32,13 @@
     &.not-valid {
         outline: red 3px solid;
         border-radius: 5px;
+        &:focus {
+            border-radius: 0;
+        }
+    }
+    &:focus {
+        outline: none;
+        background-color:rgba(0, 0, 0, 0.1);
     }
 }
 .form-bottom {

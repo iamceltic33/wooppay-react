@@ -17,7 +17,7 @@ ul, li {
 }
 a {
     text-decoration: none;
-    color: black;
+    color: inherit;
 }
 html {
     font-family: 'Roboto',
@@ -32,7 +32,7 @@ button {
 }
 //basics
 .container {
-    width: 1600px;
+    width: 1080px;
     margin-right: auto;
     margin-left: auto;
 }

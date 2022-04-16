@@ -1,6 +1,7 @@
 header {    
     background-color: rgb(70, 70, 255);    
     color: white;
+    margin-bottom: 25px;
     & .container {
         height: 100px;
         display: flex;
@@ -9,7 +10,6 @@ header {
     }
 }
 
-.logo {
-    text-transform: uppercase;
+.navigation {
     font-size: 20px;
 }

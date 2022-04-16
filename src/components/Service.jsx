@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
+import Loading from './Loading.jsx';
+import ErrorMessage from './ErrorMessage.jsx';
 import "./Service.scss";
 
 export default function Service() {
@@ -12,7 +14,11 @@ export default function Service() {
         fetch(`https://api.yii2-stage.test.wooppay.com/v1/service?service_name=${params.name}`)
             .then(response => response.json())
             .then(data => {
-                setData(data[0]);
+                if (data?.length > 0) {
+                    setData(data[0]);
+                } else {
+                    setError({ message: "Сервис временно недоступен" })
+                }
                 console.log(data);
             })
             .catch(error => setError(error))
@@ -38,8 +44,8 @@ export default function Service() {
         }
     }
 
-    if (loading) return <div>Loading...</div>
-    if (error) return <div>Error...</div>
+    if (loading) return <Loading />
+    if (error) return <ErrorMessage message={error.message} />
     return <div className='service'>
         <div className="service-header">
             <img src={`https://static.test.wooppay.com/service/${data.picture}`} alt={data.title} />

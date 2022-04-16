@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import Loading from './Loading.jsx';
+import ErrorMessage from './ErrorMessage.jsx';
 import "./ServicesList.scss";
 
 const picturePrefix = "https://static.test.wooppay.com/service/";
 const defaultPicture = "/default.png";
-let pageIndex = 0;
 let pageTotalCount = 0;
 const servicesPerPage = 32;
 export default function CategoryInfo() {
     const params = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = searchParams.get("page");
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -19,7 +22,7 @@ export default function CategoryInfo() {
             .then(response => response.json())
             .then(servicesData => {
                 setData(servicesData.data);
-                setShowData(servicesData.data.slice(pageIndex * servicesPerPage, pageIndex * servicesPerPage + servicesPerPage))
+                setShowData(servicesData.data.slice((page - 1) * servicesPerPage, (page - 1) * servicesPerPage + servicesPerPage))
                 pageTotalCount = Math.ceil(servicesData.data.length / servicesPerPage)
             })
             .catch(error => setError(error))
@@ -29,12 +32,12 @@ export default function CategoryInfo() {
 
     }, [])
 
-    if (loading) return <div>Loading...</div>
-    if (error) return <div>Error...</div>
+    if (loading) return <Loading />
+    if (error) return <ErrorMessage message={error.message} />
 
     const changePage = (page) => {
-        pageIndex = page;
-        setShowData(data.slice(pageIndex * servicesPerPage, pageIndex * servicesPerPage + servicesPerPage))
+        setSearchParams({ page })
+        setShowData(data.slice((page - 1) * servicesPerPage, (page - 1) * servicesPerPage + servicesPerPage))
     }
 
     return <>
@@ -45,15 +48,15 @@ export default function CategoryInfo() {
                         alt={service.title}
                         className="service-image"
                     />
-                    {service.title}
+                    <div className="service-title">{service.title}</div>
                 </Link>
             </div>)}
         </div>
         <div className="pagination">
             {Array.from({ length: pageTotalCount }).map((value, index) => (
                 <button key={index}
-                    className={`pagination-button${index === pageIndex ? " active" : ""}`}
-                    onClick={() => { changePage(index) }}
+                    className={`pagination-button${index === page - 1 ? " active" : ""}`}
+                    onClick={() => { changePage(index + 1) }}
                 >{index + 1}</button>
             ))}
         </div>
