@@ -47,10 +47,10 @@ export default function Service() {
     if (loading) return <Loading />
     if (error) return <ErrorMessage message={error.message} />
     return <div className='service'>
-        <div className="service-header">
+        <header className="service-header">
             <img src={`https://static.test.wooppay.com/service/${data.picture}`} alt={data.title} />
             <h1 className='service-title'>{data.title}</h1>
-        </div>
+        </header>
         <form action="#" className='service-form' onSubmit={formSubmit}>
             <div className="input-box">
                 {data.fields.map(field => <input type="text"
